@@ -188,10 +188,12 @@ public class SuspectGUI extends JFrame {
 				
 		//Add graphic elements on JPanel suspectInfopanel
 		suspectInfopanel.setLayout(new GridLayout(1,0));
-		suspectInfopanel.setAlignmentX(Component.TOP_ALIGNMENT);
+		suspectInfopanel.setAlignmentY(Component.TOP_ALIGNMENT);
+		suspectInfopanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 	    suspectInfopanel.add(nameTxt);
 	    suspectInfopanel.add(codeNameTxt);
 	    suspectInfopanel.add(scrollPanePhoneNumbers);
+	    suspectInfopanel.setSize(50, 100);
 	    suspectInfopanel.setBorder(BorderFactory.createLineBorder(Color.black));
 	    
 	    //Add graphic elements on JPanel findSMSpanel
@@ -204,33 +206,33 @@ public class SuspectGUI extends JFrame {
 
 	    
 	    //Add graphic elements on JPanel findSMSpanel
-	    partnersPanel.setLayout(new GridLayout(2,0));
-	    partnersLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+	    partnersPanel.setLayout(new GridLayout(1,0));
+	    partnersPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 	    partnersPanel.add(partnersLabel);
-	    scrollPanePartners.setAlignmentX(Component.RIGHT_ALIGNMENT);
 	    partnersPanel.add(scrollPanePartners);
 	    partnersPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 
-	   /* 
 	    //Add graphic elements on JPanel suggPartnersPanel
-	    suggPartnersPanel.setLayout(new GridLayout(2,0));
-	    suggestedPartnersLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+	    suggPartnersPanel.setLayout(new GridLayout(1,0));
+	    suggPartnersPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 	    suggPartnersPanel.add(suggestedPartnersLabel);
-	    scrollPaneSuggestedPartners.setAlignmentX(Component.RIGHT_ALIGNMENT);
 	    suggPartnersPanel.add(scrollPaneSuggestedPartners);
 	    suggPartnersPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 		
 		//Add graphic elements on JPanel sameCountryPanel
-	    sameCountryPanel.setLayout(new GridLayout(2,0));
+	    sameCountryPanel.setLayout(new GridLayout(1, 0));
+	    sameCountryPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 	    sameCountryPanel.add(scrollPaneSuspectsFromSameCountry);
 	    sameCountryPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-		*/
+		
 		//Add graphic elements on JPanel panel
 	    panel.add(suspectInfopanel);
 	    panel.add(findSMSpanel);
 	    panel.add(partnersPanel);
-	   // panel.add(suggPartnersPanel);
-	   // panel.add(sameCountryPanel);
+	    panel.add(suggPartnersPanel);
+	    panel.add(sameCountryPanel);
+	    backButton.setAlignmentY(Component.BOTTOM_ALIGNMENT);
+	    backButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		panel.add(backButton);	
 		
 		
@@ -238,9 +240,9 @@ public class SuspectGUI extends JFrame {
 		this.setContentPane(panel);
 	    this.setTitle("Suspect Page");
 		this.setVisible(true);
-		this.setResizable(false);
+		this.setResizable(true);
 		this.setSize(500, 600);
-		this.setLocation(0, 0);
+		this.setLocation(200, 0);
 	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 	}
