@@ -2,8 +2,11 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -13,6 +16,11 @@ public class SuspectGUI extends JFrame {
 	
 	//Declaration of JFrame elements
 	private JPanel panel;
+	private JPanel suspectInfopanel;
+	private JPanel findSMSpanel;
+	private JPanel partnersPanel;
+	private JPanel suggPartnersPanel;
+	private JPanel sameCountryPanel;
 	private JTextField nameTxt;
 	private JTextField codeNameTxt;
 	private JTextField enterPhoneNumTxt;
@@ -38,8 +46,13 @@ public class SuspectGUI extends JFrame {
 
 	public SuspectGUI(Suspect tempS, Registry registry) {
 		
-		//Initialize the JPamel panel
+		//Initialize JPanel(s)
 		panel = new JPanel();
+		suspectInfopanel = new JPanel();
+		findSMSpanel = new JPanel();
+		partnersPanel = new JPanel();
+		suggPartnersPanel = new JPanel();
+		sameCountryPanel = new JPanel();
 		
 		//Initialize JTextFields
 		nameTxt = new JTextField(tempS.getName());
@@ -70,9 +83,8 @@ public class SuspectGUI extends JFrame {
 		//Initialize JList<> "partnersList" and add suspect's phone numbers, from Array[] "partnersListArray"
 		int x=0;
 		for (int i=0; i<tempS.getNumberOfPotentialPartners(); i++) {
-			partnersListArray[x]=tempS.getPotentialPartners().get(i).getName();
-			partnersListArray[x+1]=tempS.getPotentialPartners().get(i).getCodeName();
-			x=x+2;
+			partnersListArray[x]=tempS.getPotentialPartners().get(i).toString();
+			x++;
 		}
 		//Show suspect's partners
 		partnersList = new JList<String>(partnersListArray);
@@ -125,30 +137,33 @@ public class SuspectGUI extends JFrame {
 		findSMSButton.addActionListener(new ActionListener () {
 			public void actionPerformed(ActionEvent e) {
 				
-				Suspect s = registry.getAllSuspects().get(0);
-				String enteredNum = enterPhoneNumTxt.getText();
-				Communication tempSMS = new SMS();
-				
+				//When user press the JButton "findSMSButton"
 				if (e.getSource().equals(findSMSButton)) {
-					int x=0;
-					for (int i=0; i<registry.getAllSuspects().size(); i++) {
-						for (int j=0; j<registry.getAllCommunications().size(); j++) {
-							for (int z=0; z<s.getPhoneNumbers().size(); z++) {
-								//Check if entered phone number is a suspect's phone number 
-								if (s.getPhoneNumbers().get(z).equals(enteredNum)) {
-									//Add suspicious messages to array
-									suspectsSuspiciousSMSArray[x]=((SMS) tempSMS).getContentText();
-									x++;
-								}
-								else {
-									suspectsSuspiciousSMSArray[0]="There are no suspicious messages for this number";
-								}
-							}
-						}
-						
+					
+					//Copy user input phone number to a String variable "enteredNum"
+					String enteredNum = enterPhoneNumTxt.getText();
+					//Initialize an ArrayList, that contains suspect's suspicious messages
+					ArrayList<String> tempSMS = new ArrayList<String>();
+					
+					if (!enteredNum.isEmpty() || enteredNum!=null) {
+						//Search in ArrayList "allCommunications"
+					    for (int i=0; i<registry.getAllCommunications().size(); i++) {
+					    	//If current communication is a SMS
+						    if (registry.getAllCommunications().get(i) instanceof SMS) {
+						    	//If entered phone number equals one of two numbers, between communication
+							    if (enteredNum.equals(registry.getAllCommunications().get(i).phoneNumber1) || enteredNum.equals(registry.getAllCommunications().get(i).phoneNumber2)) {
+							        //Add the message's content to ArrayList "tempSMS"
+							    	tempSMS.add(((SMS) registry.getAllCommunications().get(i)).getContentText());
+							    }
+						    }
+					    }
 					}
+					
+					System.out.println(tempSMS);
+					//Copy ArrayListe "tempSMS" to Array "suspectsSuspiciousSMSArray"
+					tempSMS.toArray(suspectsSuspiciousSMSArray);
+					
 					//scrollPaneSuspectsSuspiciousSMS.removeAll();
-					//suspectsSuspiciousSMSArray[0]= tempSMS.getContentText();
 					suspectsSuspiciousSMSList = new JList<String>(suspectsSuspiciousSMSArray);
 					scrollPaneSuspectsSuspiciousSMS.add(new JScrollPane(suspectsSuspiciousSMSList));
 					scrollPaneSuspectsSuspiciousSMS.revalidate();
@@ -170,29 +185,63 @@ public class SuspectGUI extends JFrame {
 			}
 		});
 		
+				
+		//Add graphic elements on JPanel suspectInfopanel
+		suspectInfopanel.setLayout(new GridLayout(1,0));
+		suspectInfopanel.setAlignmentX(Component.TOP_ALIGNMENT);
+	    suspectInfopanel.add(nameTxt);
+	    suspectInfopanel.add(codeNameTxt);
+	    suspectInfopanel.add(scrollPanePhoneNumbers);
+	    suspectInfopanel.setBorder(BorderFactory.createLineBorder(Color.black));
+	    
+	    //Add graphic elements on JPanel findSMSpanel
+	    findSMSpanel.setLayout(new GridLayout(1,0));
+	    findSMSpanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+	    findSMSpanel.add(enterPhoneNumTxt);
+	    findSMSpanel.add(scrollPaneSuspectsSuspiciousSMS);
+	    findSMSpanel.add(findSMSButton);
+	    findSMSpanel.setBorder(BorderFactory.createLineBorder(Color.black));
+
+	    
+	    //Add graphic elements on JPanel findSMSpanel
+	    partnersPanel.setLayout(new GridLayout(2,0));
+	    partnersLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+	    partnersPanel.add(partnersLabel);
+	    scrollPanePartners.setAlignmentX(Component.RIGHT_ALIGNMENT);
+	    partnersPanel.add(scrollPanePartners);
+	    partnersPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+
+	   /* 
+	    //Add graphic elements on JPanel suggPartnersPanel
+	    suggPartnersPanel.setLayout(new GridLayout(2,0));
+	    suggestedPartnersLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+	    suggPartnersPanel.add(suggestedPartnersLabel);
+	    scrollPaneSuggestedPartners.setAlignmentX(Component.RIGHT_ALIGNMENT);
+	    suggPartnersPanel.add(scrollPaneSuggestedPartners);
+	    suggPartnersPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+		
+		//Add graphic elements on JPanel sameCountryPanel
+	    sameCountryPanel.setLayout(new GridLayout(2,0));
+	    sameCountryPanel.add(scrollPaneSuspectsFromSameCountry);
+	    sameCountryPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+		*/
+		//Add graphic elements on JPanel panel
+	    panel.add(suspectInfopanel);
+	    panel.add(findSMSpanel);
+	    panel.add(partnersPanel);
+	   // panel.add(suggPartnersPanel);
+	   // panel.add(sameCountryPanel);
+		panel.add(backButton);	
+		
 		
 		//Initialize the JPanel panel 
 		this.setContentPane(panel);
 	    this.setTitle("Suspect Page");
 		this.setVisible(true);
-		this.setResizable(true);
-	    this.setSize(500, 600);
-		this.setLocationRelativeTo(null);
+		this.setResizable(false);
+		this.setSize(500, 600);
+		this.setLocation(0, 0);
 	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				
-		//Add all graphic elements on JPanel panel
-		panel.add(nameTxt);
-		panel.add(codeNameTxt);
-		panel.add(scrollPanePhoneNumbers);
-		panel.add(enterPhoneNumTxt);
-		panel.add(scrollPaneSuspectsSuspiciousSMS);
-		panel.add(findSMSButton);
-		panel.add(partnersLabel);
-		panel.add(scrollPanePartners);
-		panel.add(suggestedPartnersLabel);
-		panel.add(scrollPaneSuggestedPartners);
-		panel.add(scrollPaneSuspectsFromSameCountry);
-		panel.add(backButton);		
 		
 	}
 
