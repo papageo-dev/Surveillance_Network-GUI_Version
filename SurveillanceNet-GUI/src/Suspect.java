@@ -17,6 +17,9 @@ public class Suspect {
 	//Create an ArrayList object, that contains suspect's suggested partners
 	private ArrayList<Suspect> suggestedPartners;
 	
+	//Create an ArrayList, that will contains all common partners, between aSuspect and current suspect
+	private ArrayList<Suspect> commonPartners;
+	
 	//Suspect's constructor, without arguments
 	public Suspect() {
 		
@@ -31,6 +34,7 @@ public class Suspect {
 		phoneNumbers = new ArrayList<String>(); //Initialize a list of phone numbers used by suspect
 		potentialPartners = new ArrayList<Suspect>(); //Initialize a list of suspect's potential partners
 		suggestedPartners = new ArrayList<Suspect>(); //Initialize a list of suspect's suggested partners
+		commonPartners = new ArrayList<Suspect>(); //Initialize a list of common partners, between current suspect and another suspect
 	}
 	
 	//Add a phone number used by suspect to the ArrayList: "phoneNumbers"
@@ -66,14 +70,11 @@ public class Suspect {
 	//Return a list that contains common potential partners of current suspect and aSuspect
 	public ArrayList<Suspect> getCommonPartners(Suspect aSuspect) {
 		
-		//Create an ArrayList, that will contains all common partners, between aSuspect and current suspect
-		ArrayList<Suspect> commonPartners = new ArrayList<Suspect>();
-		
 		//Search in current suspect's and aSuspect's list with potential partners for common partners
 		for (Suspect s1 : potentialPartners) {
 			for (Suspect s2 : aSuspect.potentialPartners) {
-				//If found a partner with the same name and code name in both list, add to local ArrayList 'commonPartners'
-				if (s1.getName().equals(aSuspect.getName()) && s1.getCodeName().equals(aSuspect.getCodeName())) {
+				//If found a partner with the same name and code name in both lists, add to local ArrayList 'commonPartners'
+				if (s1.getName().equals(s2.getName()) && s1.getCodeName().equals(s2.getCodeName())) {
 					commonPartners.add(s2);
 					break;
 				}
@@ -112,6 +113,10 @@ public class Suspect {
 				}
 			}
 		}
+		
+		//Test
+		System.out.println(suggestedPartners);
+		
 		//Return a list with all suggested partners
 		return suggestedPartners;	
 	}
@@ -146,8 +151,14 @@ public class Suspect {
 		return phoneNumbers;
 	}
 	
+	//Return a list with suspect's suggested partners
 	public ArrayList<Suspect> getListOfSuggestedPartners() {
 		return suggestedPartners;
+	}
+	
+	@Override
+	public String toString() {
+		return (this.name + ", " + this.codeName);
 	}
 	
 
