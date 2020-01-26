@@ -104,18 +104,12 @@ public class Suspect {
 	public ArrayList<Suspect> getSuggestedPartners() {
 		
 		Registry r = new Registry();
-				
-		for (Suspect s1 : getCommonPartners(this)) {
-			for (Suspect s2 : r.getAllSuspects().get(getNumberOfPotentialPartners()).getCommonPartners(s1)) {
-				//If found a partner who isn't in list, add to ArrayList 'suggestedPartners'
-				if (!s1.getCommonPartners(s2).equals(s2.getCommonPartners(s1))) {
-					suggestedPartners.add(s1);
-				}
+		
+		for (int i=0; i<r.getAllSuspects().size(); i++) {
+			if (this.getCommonPartners(r.getAllSuspects().get(i)).contains(r.getAllSuspects().get(i))) {
+				suggestedPartners.add(r.getAllSuspects().get(i));
 			}
 		}
-		
-		//Test
-		System.out.println(suggestedPartners);
 		
 		//Return a list with all suggested partners
 		return suggestedPartners;	

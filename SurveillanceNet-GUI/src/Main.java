@@ -56,6 +56,12 @@ public class Main {
 		for(int i=0; i<15; i++)
 			registry.addCommunication(comms[i]);
 			
+		//For TESTING...
+		System.out.println(s1.getPotentialPartners());
+		System.out.println(s2.getPotentialPartners());
+		System.out.println(s1.getCommonPartners(s2));
+		System.out.println(s1.getSuggestedPartners());
+		
 		//Create GUI object
 		new SearchGUI(registry);
 	}

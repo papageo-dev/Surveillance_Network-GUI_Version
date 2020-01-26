@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import javax.swing.*;
 
 import java.awt.BorderLayout;
@@ -34,10 +33,8 @@ public class SuspectGUI extends JFrame {
 	private DefaultListModel<String> suggestedPartnersListModel;
 	private JList<String> suspectsFromSameCountryList;
 	private DefaultListModel<String> suspectsFromSameCountryListModel;
-	
 	private JList<String> suspectsSuspiciousSMSList;
-	private String[] suspectsSuspiciousSMSArray = new String[100];
-	private JScrollPane scrollPaneSuspectsSuspiciousSMS = new JScrollPane();
+	private DefaultListModel<String> suspectsSuspiciousSMSListModel;
 	
 	private JButton findSMSButton;
 	private JButton backButton;
@@ -125,11 +122,9 @@ public class SuspectGUI extends JFrame {
 		suspectsFromSameCountryList.setModel(suspectsFromSameCountryListModel);
 		
 		
-		//Initialize scrollPaneSuspectsSuspiciousSMS
-		suspectsSuspiciousSMSArray[0]="                                                          ";
-		suspectsSuspiciousSMSList = new JList<String>(suspectsSuspiciousSMSArray);
-		scrollPaneSuspectsSuspiciousSMS = new JScrollPane(suspectsSuspiciousSMSList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-	
+		//Initialize JList<> "suspectsSuspiciousSMSList" and DefaultListModel "suspectsSuspiciousSMSListModel"
+		suspectsSuspiciousSMSList = new JList<String>();
+		suspectsSuspiciousSMSListModel = new DefaultListModel<String>();
 		
 	
 		//Create a Listener for the JTextField enterPhoneNumTxt
@@ -154,8 +149,6 @@ public class SuspectGUI extends JFrame {
 					
 					//Copy user input phone number to a String variable "enteredNum"
 					String enteredNum = enterPhoneNumTxt.getText();
-					//Initialize an ArrayList, that contains suspect's suspicious messages
-					ArrayList<String> tempSMS = new ArrayList<String>();
 					
 					if (!enteredNum.isEmpty() || enteredNum!=null) {
 						//Search in ArrayList "allCommunications"
@@ -165,24 +158,18 @@ public class SuspectGUI extends JFrame {
 						    	//If entered phone number equals one of two numbers, between communication
 							    if (enteredNum.equals(registry.getAllCommunications().get(i).phoneNumber1) || enteredNum.equals(registry.getAllCommunications().get(i).phoneNumber2)) {
 							        //Add the message's content to ArrayList "tempSMS"
-							    	tempSMS.add(((SMS) registry.getAllCommunications().get(i)).getContentText());
+							    	suspectsSuspiciousSMSListModel.addElement(((SMS) registry.getAllCommunications().get(i)).getContentText());
 							    }
 						    }
 					    }
 					}
-					
-					System.out.println(tempSMS);
-					//Copy ArrayList "tempSMS" to Array "suspectsSuspiciousSMSArray"
-					tempSMS.toArray(suspectsSuspiciousSMSArray);
-					
-					//scrollPaneSuspectsSuspiciousSMS.removeAll();
-					suspectsSuspiciousSMSList = new JList<String>(suspectsSuspiciousSMSArray);
-					scrollPaneSuspectsSuspiciousSMS.add(new JScrollPane(suspectsSuspiciousSMSList));
-					scrollPaneSuspectsSuspiciousSMS.revalidate();
-					scrollPaneSuspectsSuspiciousSMS.repaint();
-					
-					
-					scrollPaneSuspectsSuspiciousSMS = new JScrollPane(suspectsSuspiciousSMSList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+					//Set DefaultListModel "suspectsSuspiciousSMSListModel", to JList "suspectsSuspiciousSMSList"
+					suspectsSuspiciousSMSList.setModel(suspectsSuspiciousSMSListModel);
+
+					//Display JList "suspectsSuspiciousSMSList"
+					suspectsSuspiciousSMSList.removeAll();
+					suspectsSuspiciousSMSList.revalidate();
+					suspectsSuspiciousSMSList.repaint();
 				}
 			}
 		});
@@ -207,7 +194,7 @@ public class SuspectGUI extends JFrame {
 	    
 	    //Add graphic elements on JPanel "findSMSpanel"
 	    findSMSpanel.add(enterPhoneNumTxt);
-	    findSMSpanel.add(scrollPaneSuspectsSuspiciousSMS);
+	    findSMSpanel.add(suspectsSuspiciousSMSList);
 	    findSMSpanel.add(findSMSButton);
 	    findSMSpanel.setBorder(BorderFactory.createLineBorder(Color.black));
 
@@ -237,8 +224,8 @@ public class SuspectGUI extends JFrame {
 	    panel.add(partnersPanel);
 	    panel.add(suggPartnersPanel);
 	    panel.add(sameCountryPanel);
-	    backButton.setAlignmentY(Component.BOTTOM_ALIGNMENT);
-	    backButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+	    //backButton.setAlignmentY(Component.BOTTOM_ALIGNMENT);
+	    //backButton.setAlignmentX(Component.BOTTOM_ALIGNMENT);
 		panel.add(backButton);	
 		
 		
@@ -247,7 +234,7 @@ public class SuspectGUI extends JFrame {
 	    this.setTitle("Suspect Page");
 		this.setVisible(true);
 		this.setResizable(true);
-		this.setSize(420, 500);
+		this.setSize(370, 500);
 		this.setLocation(200, 0);
 	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		

@@ -1,5 +1,4 @@
 
-import java.util.ArrayList;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -80,6 +79,18 @@ public class SearchGUI extends JFrame{
 						JOptionPane.showMessageDialog(SearchGUI.this, "Suspect " + name + " NOT found!",
 								                      "Message", JOptionPane.ERROR_MESSAGE);
 					}
+				}	
+			}
+        });
+        
+        //Create a Listener for the JButton visualNetButton
+        visualNetButton.addActionListener(new ActionListener() {
+        	
+			public void actionPerformed(ActionEvent e) {
+				
+				if (e.getSource().equals(visualNetButton)) {
+					
+					
 				}	
 			}
         });
