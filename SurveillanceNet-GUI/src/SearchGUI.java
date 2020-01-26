@@ -11,13 +11,15 @@ public class SearchGUI extends JFrame{
 	private JPanel panel;
 	private JTextField text1;
 	private JButton findButton;
+	private JButton visualNetButton;
 	private boolean found = false;
 	
 	public SearchGUI(Registry registry) {
 		
 		panel = new JPanel(); //Initialize JPanel panel
         text1 = new JTextField("Please enter suspect's name"); //Initialize JTextField text1, with a prompt message
-        findButton = new JButton("Find"); //Initialize JButton findButton, as "Find"
+        findButton = new JButton("Find"); //Initialize JButton "findButton"
+        visualNetButton = new JButton("Visualize Network"); //Initialize JButton "visualNet"
         
         //Initialize the JPanel panel 
         this.setContentPane(panel);
@@ -28,10 +30,12 @@ public class SearchGUI extends JFrame{
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-        //Set a tip for JTextField text1
+        //Set a tip for JTextField "text1"
         text1.setToolTipText("Please enter suspect's name");
-        //Set a tip for JButton findButton
+        //Set a tip for JButton "findButton"
         findButton.setToolTipText("Search for this suspect");
+        //Set a tip for JButton "visualNet"
+        visualNetButton.setToolTipText("Show the visualization of Suspects Network");
         
         //Create a Listener for the JTextField text1
         text1.addFocusListener(new FocusListener() {
@@ -80,8 +84,9 @@ public class SearchGUI extends JFrame{
 			}
         });
         
-        panel.add(text1); //Add JTextField text1, on JPanel panel
-        panel.add(findButton); //Add JButton findButton, on JPanel panel
+        panel.add(text1); //Add JTextField "text1", on JPanel "panel"
+        panel.add(findButton); //Add JButton "findButton", on JPanel "panel"
+        panel.add(visualNetButton); //Add JButton "visualNetButton" on JPanel "panel"
 	}
 
 }
