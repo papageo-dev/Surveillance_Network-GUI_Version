@@ -21,26 +21,27 @@ public class SuspectGUI extends JFrame {
 	private JPanel partnersPanel;
 	private JPanel suggPartnersPanel;
 	private JPanel sameCountryPanel;
+	
 	private JTextField nameTxt;
 	private JTextField codeNameTxt;
 	private JTextField enterPhoneNumTxt;
+	
 	private JList<String> phoneList;
+	private DefaultListModel<String> phoneListModel;
 	private JList<String> partnersList;
+	private DefaultListModel<String> partnersListModel;
 	private JList<String> suggestedPartnersList;
+	private DefaultListModel<String> suggestedPartnersListModel;
 	private JList<String> suspectsFromSameCountryList;
+	private DefaultListModel<String> suspectsFromSameCountryListModel;
+	
 	private JList<String> suspectsSuspiciousSMSList;
-	private String[] phoneListArray = new String[15];
-	private String[] partnersListArray = new String[30];
-	private String[] suggestedPartnersListArray = new String[30];
-	private String[] suspectsFromSameCountryArray = new String[30];
 	private String[] suspectsSuspiciousSMSArray = new String[100];
-	private JScrollPane scrollPanePhoneNumbers = new JScrollPane();
-	private JScrollPane scrollPanePartners = new JScrollPane();
-	private JScrollPane scrollPaneSuggestedPartners = new JScrollPane();
-	private JScrollPane scrollPaneSuspectsFromSameCountry = new JScrollPane();
 	private JScrollPane scrollPaneSuspectsSuspiciousSMS = new JScrollPane();
+	
 	private JButton findSMSButton;
 	private JButton backButton;
+	
 	private JLabel partnersLabel;
 	private JLabel suggestedPartnersLabel;
 
@@ -70,48 +71,59 @@ public class SuspectGUI extends JFrame {
 		//Initialize JLabels
 		partnersLabel = new JLabel("Partners");
 		suggestedPartnersLabel = new JLabel("Suggested Partners--->");
+
+
+		//Initialize JList<> "phoneList" and DefaultListModel "phoneListModel"
+		phoneList = new JList<String>();
+		phoneListModel = new DefaultListModel<String>();
 		
-		//Copy all suspect's phone numbers, from ArrayList<> "phoneNumbers", to Array[] "phoneListArray"
-		for (int i=0; i<tempS.getPhoneNumbers().size(); i++) {
-			phoneListArray[i]=tempS.getPhoneNumbers().get(i);
+		//Add suspect's phone numbers to "phoneListModel"
+		for(int i=0; i<tempS.getPhoneNumbers().size(); i++) {
+			phoneListModel.addElement(tempS.getPhoneNumbers().get(i));
 		}
-		//Initialize JList<> "phoneList" and add suspect's phone numbers, from Array[] "phoneListArray"
-		phoneList = new JList<String>(phoneListArray);
-		//Show suspect's phone numbers
-		scrollPanePhoneNumbers  = new JScrollPane(phoneList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-	
-		//Initialize JList<> "partnersList" and add suspect's phone numbers, from Array[] "partnersListArray"
-		int x=0;
-		for (int i=0; i<tempS.getNumberOfPotentialPartners(); i++) {
-			partnersListArray[x]=tempS.getPotentialPartners().get(i).toString();
-			x++;
-		}
-		//Show suspect's partners
-		partnersList = new JList<String>(partnersListArray);
-		scrollPanePartners = new JScrollPane(partnersList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		//Set DefaultListModel "phoneListModel", to JList "phoneList"
+		phoneList.setModel(phoneListModel);
 		
-		//Initialize JList<> "suggestedPartnersList" and add suspect's phone numbers, from Array[] "suggestedPartnersListArray"
-		suggestedPartnersListArray[0]="John Papas";
+		
+		//Initialize JList<> "partnersList" and DefaultListModel "partnersListModel"
+		partnersList = new JList<String>();
+		partnersListModel = new DefaultListModel<String>();
+		
+		//Add suspect's potential partners to "partnersListModel"
+		for (int i=0; i<tempS.getNumberOfPotentialPartners(); i++){
+			partnersListModel.addElement(tempS.getPotentialPartners().get(i).toString());
+		}
+		//Set DefaultListModel "partnersListModel", to JList "partnersList"
+		partnersList.setModel(partnersListModel);
+		
+		
+		//Initialize JList<> "suggestedPartnersList" and DefaultListModel "suggestedPartnersListModel"
+		suggestedPartnersList = new JList<String>();
+		suggestedPartnersListModel = new DefaultListModel<String>();
+		suggestedPartnersListModel.addElement("John Papas");
+		
+		//Add suspect's suggested partners to "suggestedPartnersListModel"
 		for (int i=0; i<tempS.getListOfSuggestedPartners().size(); i++) {
-			suggestedPartnersListArray[i]=tempS.getListOfSuggestedPartners().get(i).getName();
+			suggestedPartnersListModel.addElement(tempS.getListOfSuggestedPartners().get(i).getName());
 		}
-		//Show suggested partners for this suspect
-		suggestedPartnersList = new JList<String>(suggestedPartnersListArray);
-		scrollPaneSuggestedPartners = new JScrollPane(suggestedPartnersList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		//Set DefaultListModel "suggestedPartnersListModel", to JList "suggestedPartnersList"
+		suggestedPartnersList.setModel(suggestedPartnersListModel);
 		
-		//Initialize JList<> "suspectsFromSameCountryList" and add suspect's phone numbers, from Array[] "suspectsFromSameCountryArray"
-		//Set a message and and the name of country at the first line of the scrollPane
-		suspectsFromSameCountryArray[0]="Suspects coming from " + tempS.getOriginCountry();
-		int j=1;
+		
+		//Initialize JList<> "suspectsFromSameCountryList" and DefaultListModel "suspectsFromSameCountryListModel"
+		suspectsFromSameCountryList = new JList<String>();
+		suspectsFromSameCountryListModel = new DefaultListModel<String>();
+		suspectsFromSameCountryListModel.addElement("Suspects coming from " + tempS.getOriginCountry());
+		
+		//Search for suspects coming from the same Country and add them to "suspectsFromSameCountryListModel"
 		for (int i=0; i<registry.getAllSuspects().size(); i++) {
 			if (registry.getAllSuspects().get(i).getOriginCountry().equals(tempS.getOriginCountry())) {
-				suspectsFromSameCountryArray[j]=registry.getAllSuspects().get(i).getName();
-				j++;
+				suspectsFromSameCountryListModel.addElement(registry.getAllSuspects().get(i).getName());
 			}
 		}
-		//Show all suspects, that coming from the current suspect's origin country 
-		suspectsFromSameCountryList = new JList<String>(suspectsFromSameCountryArray);
-		scrollPaneSuspectsFromSameCountry = new JScrollPane(suspectsFromSameCountryList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		//Set DefaultListModel "suspectsFromSameCountryListModel", to JList "suspectsFromSameCountryList"
+		suspectsFromSameCountryList.setModel(suspectsFromSameCountryListModel);
+		
 		
 		//Initialize scrollPaneSuspectsSuspiciousSMS
 		suspectsSuspiciousSMSArray[0]="                                                          ";
@@ -160,7 +172,7 @@ public class SuspectGUI extends JFrame {
 					}
 					
 					System.out.println(tempSMS);
-					//Copy ArrayListe "tempSMS" to Array "suspectsSuspiciousSMSArray"
+					//Copy ArrayList "tempSMS" to Array "suspectsSuspiciousSMSArray"
 					tempSMS.toArray(suspectsSuspiciousSMSArray);
 					
 					//scrollPaneSuspectsSuspiciousSMS.removeAll();
@@ -186,46 +198,40 @@ public class SuspectGUI extends JFrame {
 		});
 		
 				
-		//Add graphic elements on JPanel suspectInfopanel
-		suspectInfopanel.setLayout(new GridLayout(1,0));
-		suspectInfopanel.setAlignmentY(Component.TOP_ALIGNMENT);
-		suspectInfopanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+		//Add graphic elements on JPanel "suspectInfopanel"
 	    suspectInfopanel.add(nameTxt);
 	    suspectInfopanel.add(codeNameTxt);
-	    suspectInfopanel.add(scrollPanePhoneNumbers);
+	    suspectInfopanel.add(phoneList);
 	    suspectInfopanel.setSize(50, 100);
 	    suspectInfopanel.setBorder(BorderFactory.createLineBorder(Color.black));
 	    
-	    //Add graphic elements on JPanel findSMSpanel
-	    findSMSpanel.setLayout(new GridLayout(1,0));
-	    findSMSpanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+	    //Add graphic elements on JPanel "findSMSpanel"
 	    findSMSpanel.add(enterPhoneNumTxt);
 	    findSMSpanel.add(scrollPaneSuspectsSuspiciousSMS);
 	    findSMSpanel.add(findSMSButton);
 	    findSMSpanel.setBorder(BorderFactory.createLineBorder(Color.black));
 
-	    
-	    //Add graphic elements on JPanel findSMSpanel
-	    partnersPanel.setLayout(new GridLayout(1,0));
+	    //Add graphic elements on JPanel "partnersPanel"
+	    //partnersPanel.setLayout(new GridLayout(1,0));
 	    partnersPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 	    partnersPanel.add(partnersLabel);
-	    partnersPanel.add(scrollPanePartners);
+	    partnersPanel.add(partnersList);
 	    partnersPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 
-	    //Add graphic elements on JPanel suggPartnersPanel
-	    suggPartnersPanel.setLayout(new GridLayout(1,0));
+	    //Add graphic elements on JPanel "suggPartnersPanel"
+	    //suggPartnersPanel.setLayout(new GridLayout(1,0));
 	    suggPartnersPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 	    suggPartnersPanel.add(suggestedPartnersLabel);
-	    suggPartnersPanel.add(scrollPaneSuggestedPartners);
+	    suggPartnersPanel.add(suggestedPartnersList);
 	    suggPartnersPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 		
-		//Add graphic elements on JPanel sameCountryPanel
-	    sameCountryPanel.setLayout(new GridLayout(1, 0));
+		//Add graphic elements on JPanel "sameCountryPanel"
+	    //sameCountryPanel.setLayout(new GridLayout(1, 0));
 	    sameCountryPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-	    sameCountryPanel.add(scrollPaneSuspectsFromSameCountry);
+	    sameCountryPanel.add(suspectsFromSameCountryList);
 	    sameCountryPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 		
-		//Add graphic elements on JPanel panel
+		//Add graphic elements on JPanel "panel"
 	    panel.add(suspectInfopanel);
 	    panel.add(findSMSpanel);
 	    panel.add(partnersPanel);
@@ -241,7 +247,7 @@ public class SuspectGUI extends JFrame {
 	    this.setTitle("Suspect Page");
 		this.setVisible(true);
 		this.setResizable(true);
-		this.setSize(500, 600);
+		this.setSize(420, 500);
 		this.setLocation(200, 0);
 	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
