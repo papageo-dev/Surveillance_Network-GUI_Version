@@ -97,11 +97,15 @@ public class SuspectGUI extends JFrame {
 		//Initialize JList<> "suggestedPartnersList" and DefaultListModel "suggestedPartnersListModel"
 		suggestedPartnersList = new JList<String>();
 		suggestedPartnersListModel = new DefaultListModel<String>();
-		suggestedPartnersListModel.addElement("John Papas");
 		
 		//Add suspect's suggested partners to "suggestedPartnersListModel"
-		for (int i=0; i<tempS.getListOfSuggestedPartners().size(); i++) {
+		for (int i=0; i<tempS.getSuggestedPartners(registry).size(); i++) {
 			suggestedPartnersListModel.addElement(tempS.getListOfSuggestedPartners().get(i).getName());
+		}
+		//Check if there aren't suggested partners for current Suspect
+		if (tempS.getSuggestedPartners(registry).size()==0) {
+			//Add a warning message in "suggestedPartnersListModel"
+			suggestedPartnersListModel.addElement("There are no suggested partners for this Suspect: " + "'" + tempS.getName() +"'");
 		}
 		//Set DefaultListModel "suggestedPartnersListModel", to JList "suggestedPartnersList"
 		suggestedPartnersList.setModel(suggestedPartnersListModel);
