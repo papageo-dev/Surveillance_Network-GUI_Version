@@ -54,7 +54,7 @@ public class Main {
 		for(int i=0; i<15; i++)
 			registry.addCommunication(comms[i]);	
 	
-		//Create a SearchGUI object
+		//Create a Search GUI 
 		new SearchGUI(registry);
 	}
 
