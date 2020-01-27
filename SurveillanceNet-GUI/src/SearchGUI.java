@@ -93,7 +93,6 @@ public class SearchGUI extends JFrame{
 					new VisualizeNetwork();
 					//Close this JPanel
 					panel.setVisible(false);
-					
 				}	
 			}
         });
