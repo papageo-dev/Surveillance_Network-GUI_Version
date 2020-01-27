@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class Main {
 
 	public static void main(String[] args) {
@@ -21,8 +19,8 @@ public class Main {
 		Suspect s4 = new Suspect("John Papas", "Quick knife", "Greece", "Athens");
 		s4.addNumber("0030210567888");
 		
-		//Creation of communication objects
-		Communication[] comms = new Communication[15];	//Change size for ASSIGNMENT 3
+		//Creaton of communication objects
+		Communication[] comms = new Communication[15];
 		
 		comms[0] = new PhoneCall("00496955444444", "00478484777777", 15, 10, 2019, 127);
 		comms[1] = new PhoneCall("00496955444444", "00478484777777", 16, 10, 2019, 240);
@@ -54,15 +52,9 @@ public class Main {
 		registry.addSuspect(s4);
 		
 		for(int i=0; i<15; i++)
-			registry.addCommunication(comms[i]);
-			
-		//For TESTING...
-		System.out.println(s1.getPotentialPartners());
-		System.out.println(s2.getPotentialPartners());
-		System.out.println(s1.getCommonPartners(s2));
-		System.out.println(s1.getSuggestedPartners());
-		
-		//Create GUI object
+			registry.addCommunication(comms[i]);	
+	
+		//Create a SearchGUI object
 		new SearchGUI(registry);
 	}
 
