@@ -100,18 +100,32 @@ public class Suspect {
 		}
 	}
 	
-	//Return a list with suggested partners for aSuspect
-	public ArrayList<Suspect> getSuggestedPartners() {
+	//Return a list with suggested partners for this Suspect
+	public ArrayList<Suspect> getSuggestedPartners(Registry registry) {
 		
-		Registry r = new Registry();
-		
-		for (int i=0; i<r.getAllSuspects().size(); i++) {
-			if (this.getCommonPartners(r.getAllSuspects().get(i)).contains(r.getAllSuspects().get(i))) {
-				suggestedPartners.add(r.getAllSuspects().get(i));
+		//Search in ArrayList "potentialPartners" for Suspects s1 and s2
+		for (Suspect s1 : potentialPartners) {
+			for (Suspect s2 : potentialPartners) {
+				/*
+				 * If one of the ArrayLists "potentialPartners", contains a Suspect(from the ArrayList "allSuspects"),
+				 * but the other NOT contains this, then add this Suspect to the ArrayList "suggestedPartners".
+				 */
+				for (int i=0; i<registry.getAllSuspects().size(); i++) {
+					if ((s1.potentialPartners.contains(registry.getAllSuspects().get(i)) && !s2.potentialPartners.contains(registry.getAllSuspects().get(i)))
+						|| (s2.potentialPartners.contains(registry.getAllSuspects().get(i)) && !s1.potentialPartners.contains(registry.getAllSuspects().get(i)))) {
+						//Check if current Suspect is the owner of the ArrayList "potentialPartners"
+						if (registry.getAllSuspects().get(i)!=s1 && registry.getAllSuspects().get(i)!=s2) {
+							//Check if ArrayList "suggestedPartners" already contains the current Suspect
+							if (!suggestedPartners.contains(registry.getAllSuspects().get(i))) {
+								//Add current Suspect to ArrayList "suggestedPartners"
+								suggestedPartners.add(registry.getAllSuspects().get(i));
+							}
+						}
+					}
+				}
 			}
 		}
-		
-		//Return a list with all suggested partners
+		//Return a list with all suggested partners for this Suspect
 		return suggestedPartners;	
 	}
 
