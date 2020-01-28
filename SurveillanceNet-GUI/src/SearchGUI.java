@@ -90,7 +90,7 @@ public class SearchGUI extends JFrame{
 				
 				if (e.getSource().equals(visualNetButton)) {
 					//Create/open a new JPanel "Visualize Network"
-					new VisualizeNetwork();
+					new VisualizeNetwork(registry);
 					//Close this JPanel
 					panel.setVisible(false);
 				}	
