@@ -19,7 +19,7 @@ public class Main {
 		Suspect s4 = new Suspect("John Papas", "Quick knife", "Greece", "Athens");
 		s4.addNumber("0030210567888");
 		
-		//Creaton of communication objects
+		//Creation of communication objects
 		Communication[] comms = new Communication[15];
 		
 		comms[0] = new PhoneCall("00496955444444", "00478484777777", 15, 10, 2019, 127);

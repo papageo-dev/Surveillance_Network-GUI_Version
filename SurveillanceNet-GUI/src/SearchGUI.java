@@ -8,7 +8,7 @@ import java.awt.event.FocusListener;
 public class SearchGUI extends JFrame{
 	
 	private JPanel panel;
-	private JTextField text1;
+	private JTextField suspectName;
 	private JButton findButton;
 	private JButton visualNetButton;
 	private boolean found = false;
@@ -16,34 +16,25 @@ public class SearchGUI extends JFrame{
 	public SearchGUI(Registry registry) {
 		
 		panel = new JPanel(); //Initialize JPanel panel
-        text1 = new JTextField("Please enter suspect's name"); //Initialize JTextField text1, with a prompt message
+        suspectName = new JTextField("Please enter suspect's name"); //Initialize JTextField "suspectName", with a prompt message
         findButton = new JButton("Find"); //Initialize JButton "findButton"
         visualNetButton = new JButton("Visualize Network"); //Initialize JButton "visualNet"
         
-        //Initialize the JPanel panel 
-        this.setContentPane(panel);
-        this.setTitle("Find Suspect");
-        this.setVisible(true);
-        this.setSize(270, 100);
-        this.setResizable(false);
-        this.setLocationRelativeTo(null);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
-        //Set a tip for JTextField "text1"
-        text1.setToolTipText("Please enter suspect's name");
+        //Set a tip for JTextField "suspectName"
+        suspectName.setToolTipText("Please enter suspect's name");
         //Set a tip for JButton "findButton"
         findButton.setToolTipText("Search for this suspect");
         //Set a tip for JButton "visualNet"
         visualNetButton.setToolTipText("Show the visualization of Suspects Network");
         
-        //Create a Listener for the JTextField text1
-        text1.addFocusListener(new FocusListener() {
-            //If user click on JTextField text1
+        //Create a Listener for the JTextField suspectName
+        suspectName.addFocusListener(new FocusListener() {
+            //If user click on JTextField suspectName
         	public void focusGained(FocusEvent e) {
         		//Replace prompt message with space character
-                text1.setText("");
+                suspectName.setText("");
             }
-        	//If user NOT click on JTextField text1
+        	//If user NOT click on JTextField suspectName
             public void focusLost(FocusEvent e) {
                 //Do nothing
             }
@@ -60,7 +51,7 @@ public class SearchGUI extends JFrame{
 				if (e.getSource().equals(findButton)) {
 					
 					//Initialize a String variable with suspect's entered name
-					String name = text1.getText();
+					String name = suspectName.getText();
 					//Search in ArrayList<> allSuspects
 					for (Suspect s : registry.getAllSuspects()) {
 						if (name.equals(s.getName())) { //If found this suspect
@@ -97,9 +88,18 @@ public class SearchGUI extends JFrame{
 			}
         });
         
-        panel.add(text1); //Add JTextField "text1", on JPanel "panel"
+        //Initialize JFrame
+        panel.add(suspectName); //Add JTextField "suspectName", on JPanel "panel"
         panel.add(findButton); //Add JButton "findButton", on JPanel "panel"
         panel.add(visualNetButton); //Add JButton "visualNetButton" on JPanel "panel"
+        
+        this.setContentPane(panel);
+        this.setTitle("Find Suspect");
+        this.setVisible(true);
+        this.setSize(270, 100);
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 }
