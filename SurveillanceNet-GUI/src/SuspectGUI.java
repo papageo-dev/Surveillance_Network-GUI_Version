@@ -105,7 +105,7 @@ public class SuspectGUI extends JFrame {
 		//Check if there aren't suggested partners for current Suspect
 		if (tempS.getSuggestedPartners(registry).size()==0) {
 			//Add a warning message in "suggestedPartnersListModel"
-			suggestedPartnersListModel.addElement("There are no suggested partners for this Suspect: " + "'" + tempS.getName() +"'");
+			suggestedPartnersListModel.addElement("There aren't suggested partners...");
 		}
 		//Set DefaultListModel "suggestedPartnersListModel", to JList "suggestedPartnersList"
 		suggestedPartnersList.setModel(suggestedPartnersListModel);

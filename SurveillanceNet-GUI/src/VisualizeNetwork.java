@@ -68,7 +68,8 @@ public class VisualizeNetwork {
 	    
 	    JFrame frame = new JFrame();
 	    frame.setTitle("Suspects Network");
-	    frame.setLocationRelativeTo(null);
+	    //frame.setLocationRelativeTo(null);
+	    frame.setLocation(0, 0);
 	    frame.setContentPane(panel);
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    frame.pack();
