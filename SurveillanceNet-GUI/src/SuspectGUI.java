@@ -55,7 +55,7 @@ public class SuspectGUI extends JFrame {
 		//Initialize JTextFields
 		nameTxt = new JTextField(tempS.getName());
 		codeNameTxt = new JTextField(tempS.getCodeName());
-		enterPhoneNumTxt = new JTextField("Please enter suspect's phone number");
+		enterPhoneNumTxt = new JTextField("Enter suspect's phone number");
 		
 		//Initialize JButtons
 		findSMSButton = new JButton("Find SMS");
@@ -154,7 +154,22 @@ public class SuspectGUI extends JFrame {
 					//Copy user input phone number to a String variable "enteredNum"
 					String enteredNum = enterPhoneNumTxt.getText();
 					
-					if (!enteredNum.isEmpty() || enteredNum!=null) {
+					//Clear JList's content, from last search
+					suspectsSuspiciousSMSListModel.clear();
+					
+					//Check if user's input is valid
+					boolean validInput=false;
+					if (enteredNum.trim().isEmpty() || Character.isLetter(enteredNum.charAt(0)) || enteredNum==null) {
+						JOptionPane.showMessageDialog(SuspectGUI.this, "Please enter a valid phone number and try again",
+			                      "Invalid Input", JOptionPane.ERROR_MESSAGE);
+						validInput=false;
+					}
+					else {
+						validInput=true;
+					}
+					
+					//Search for Suspicious Messages
+					if (validInput) {
 						//Search in ArrayList "allCommunications"
 					    for (int i=0; i<registry.getAllCommunications().size(); i++) {
 					    	//If current communication is a SMS
@@ -166,14 +181,21 @@ public class SuspectGUI extends JFrame {
 							    }
 						    }
 					    }
-					}
-					//Set DefaultListModel "suspectsSuspiciousSMSListModel", to JList "suspectsSuspiciousSMSList"
-					suspectsSuspiciousSMSList.setModel(suspectsSuspiciousSMSListModel);
+					    //Check if there are Suspicious Messages for enteredNum
+						if (suspectsSuspiciousSMSListModel.getSize()==0) {
+							JOptionPane.showMessageDialog(SuspectGUI.this, "There aren't Suspicious Messages for this phone number",
+				                      "Message", JOptionPane.INFORMATION_MESSAGE);
+						}
+						else {
+							//Set DefaultListModel "suspectsSuspiciousSMSListModel", to JList "suspectsSuspiciousSMSList"
+							suspectsSuspiciousSMSList.setModel(suspectsSuspiciousSMSListModel);
 
-					//Display JList "suspectsSuspiciousSMSList"
-					suspectsSuspiciousSMSList.removeAll();
-					suspectsSuspiciousSMSList.revalidate();
-					suspectsSuspiciousSMSList.repaint();
+							//Display JList "suspectsSuspiciousSMSList"
+							suspectsSuspiciousSMSList.removeAll();
+							suspectsSuspiciousSMSList.revalidate();
+							suspectsSuspiciousSMSList.repaint();
+						}
+					}
 				}
 			}
 		});
@@ -190,56 +212,58 @@ public class SuspectGUI extends JFrame {
 		
 				
 		//Add graphic elements on JPanel "suspectInfopanel"
+		suspectInfopanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 	    suspectInfopanel.add(nameTxt);
+	    nameTxt.setEditable(false);
 	    suspectInfopanel.add(codeNameTxt);
+	    codeNameTxt.setEditable(false);
 	    suspectInfopanel.add(phoneList);
-	    suspectInfopanel.setSize(50, 100);
-	    suspectInfopanel.setBorder(BorderFactory.createLineBorder(Color.black));
+	    suspectInfopanel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+	    panel.add(suspectInfopanel);
 	    
 	    //Add graphic elements on JPanel "findSMSpanel"
+	    enterPhoneNumTxt.setPreferredSize(new Dimension(175, 20));
 	    findSMSpanel.add(enterPhoneNumTxt);
+	    suspectsSuspiciousSMSList.setPreferredSize(new Dimension(230, 150));
 	    findSMSpanel.add(suspectsSuspiciousSMSList);
 	    findSMSpanel.add(findSMSButton);
-	    findSMSpanel.setBorder(BorderFactory.createLineBorder(Color.black));
+	    findSMSpanel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+	    panel.add(findSMSpanel);
 
 	    //Add graphic elements on JPanel "partnersPanel"
-	    //partnersPanel.setLayout(new GridLayout(1,0));
 	    partnersPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 	    partnersPanel.add(partnersLabel);
+	    partnersLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+	    partnersList.setPreferredSize(new Dimension(230, 150));
 	    partnersPanel.add(partnersList);
-	    partnersPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+	    partnersPanel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+	    panel.add(partnersPanel);
 
 	    //Add graphic elements on JPanel "suggPartnersPanel"
-	    //suggPartnersPanel.setLayout(new GridLayout(1,0));
 	    suggPartnersPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 	    suggPartnersPanel.add(suggestedPartnersLabel);
+	    suggestedPartnersList.setPreferredSize(new Dimension(220, 60));
 	    suggPartnersPanel.add(suggestedPartnersList);
-	    suggPartnersPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+	    suggPartnersPanel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+	    panel.add(suggPartnersPanel);
 		
 		//Add graphic elements on JPanel "sameCountryPanel"
-	    //sameCountryPanel.setLayout(new GridLayout(1, 0));
 	    sameCountryPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+	    suspectsFromSameCountryList.setPreferredSize(new Dimension(330, 60));
 	    sameCountryPanel.add(suspectsFromSameCountryList);
-	    sameCountryPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-		
-		//Add graphic elements on JPanel "panel"
-	    panel.add(suspectInfopanel);
-	    panel.add(findSMSpanel);
-	    panel.add(partnersPanel);
-	    panel.add(suggPartnersPanel);
+	    sameCountryPanel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 	    panel.add(sameCountryPanel);
-	    //backButton.setAlignmentY(Component.BOTTOM_ALIGNMENT);
-	    //backButton.setAlignmentX(Component.BOTTOM_ALIGNMENT);
-		panel.add(backButton);	
 		
+		panel.add(backButton); //Return to "SearchGUI" screen	
 		
-		//Initialize the JPanel panel 
+		//Initialize JFrame
+		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		this.setContentPane(panel);
 	    this.setTitle("Suspect Page");
 		this.setVisible(true);
-		this.setResizable(true);
-		this.setSize(370, 500);
-		this.setLocation(200, 0);
+		this.setResizable(false);
+		this.setSize(530, 650);
+		this.setLocationRelativeTo(null);
 	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 	}
