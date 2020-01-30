@@ -12,7 +12,7 @@ public class Registry {
 		allSuspects.add(aSuspect);
 	}
 	
-	//Add a communication to the ArrayList: allComm and...
+	//Add a communication to the ArrayList "allComm" and check if two suspects are partners
 	public void addCommunication(Communication aCommunication) {
 		
 		allComm.add(aCommunication); //Add a new communication
@@ -43,7 +43,8 @@ public class Registry {
 				mostPartnersSuspect=getAllSuspects().get(i); //Make this suspect, the suspect with the most partners
 			}
 		}
-		return mostPartnersSuspect; //Return the suspect with the most partners
+		//Return the suspect with the most partners
+		return mostPartnersSuspect;
 	}
 	
 	//Return the longest phone call between number1 and number2
@@ -64,10 +65,11 @@ public class Registry {
 				}
 			}	
 		}
-		return (PhoneCall) longestPhoneCall; //Cast Communication "longestPhoneCall" to PhoneCall and return it
+		//Return the longest phone call, between two numbers
+		return (PhoneCall) longestPhoneCall; 
 	}
 	
-	//Return an ArrayList with all messages that contains suspicious words, between number1 and number2
+	//Check for messages that contains suspicious words, between number1 and number2
 	public ArrayList<SMS> getMessagesBetween(String number1, String number2) {
 		
 		//Create an Array, that will contains all suspicious words
@@ -92,10 +94,11 @@ public class Registry {
 				}
 			}
 		}
-		return suspiciousMessages; //Return the ArrayList with all suspicious messages
+		//Return an ArrayList with all suspicious messages between two numbers
+		return suspiciousMessages;
 	}
 	
-	//Return all suspects that they came from specific Country(country)
+	//Return all suspects that they came from specific Country
 	public void printSuspectsFromCountry(String country) {
 		
 		for (int i=0; i<getAllSuspects().size(); i++) {
@@ -114,6 +117,5 @@ public class Registry {
 	public ArrayList<Communication> getAllCommunications() {
 		return allComm;
 	}
-	
 	
 }

@@ -43,12 +43,12 @@ public class VisualizeNetwork {
 	//Display a JFrame with Suspects Network Graph
 	public void displayGraph(Registry registry, UndirectedSparseGraph<Suspect, Object> g) {
 		
-		//Create a VisualizationViewer object, to show the graph with a CircleLayout
+		//Create a VisualizationViewer object, to show the graph by a CircleLayout
 		VisualizationViewer<Suspect, Object> suspectsNetViewer =
 				new VisualizationViewer<>(new CircleLayout<Suspect, Object>(g));
 		
 		//Initialize the VisualizationViewer
-		suspectsNetViewer.setGraphMouse(new DefaultModalGraphMouse<>());
+		suspectsNetViewer.setGraphMouse(new DefaultModalGraphMouse<>()); //User can move the graph with mouse
 		suspectsNetViewer.getRenderContext().setVertexLabelRenderer(new DefaultVertexLabelRenderer(Color.BLACK));
 		//Set suspect's codeName, as label of vertex
 		suspectsNetViewer.getRenderContext().setVertexLabelTransformer(s -> s == null ? "" : s.getCodeName());
@@ -60,7 +60,7 @@ public class VisualizeNetwork {
 		diameterTxt.setToolTipText("Diameter of the graph");
 	    
 		
-	    //Create/Initialize JFrame "frame" and JPanel "panel"
+	    //Initialize JFrame
 	    JPanel panel = new JPanel();
 	    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 	    panel.add(suspectsNetViewer);
@@ -68,8 +68,7 @@ public class VisualizeNetwork {
 	    
 	    JFrame frame = new JFrame();
 	    frame.setTitle("Suspects Network");
-	    //frame.setLocationRelativeTo(null);
-	    frame.setLocation(0, 0);
+	    frame.setLocation(360, 50);
 	    frame.setContentPane(panel);
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    frame.pack();

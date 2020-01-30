@@ -18,10 +18,9 @@ public class PhoneCall extends Communication {
 				"Duration: " + callDuration);
 	}
 	
-	//Return phone call duration
+	//Return phone call's duration
 	public int getPhoneCallDuration() {
 		return callDuration;
 	}
-
 	
 }

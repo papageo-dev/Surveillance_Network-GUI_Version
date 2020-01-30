@@ -5,13 +5,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
-public class SearchGUI extends JFrame{
+public class SearchGUI extends JFrame {
 	
 	private JPanel panel;
 	private JTextField suspectName;
 	private JButton findButton;
 	private JButton visualNetButton;
-	private boolean found = false;
 	
 	public SearchGUI(Registry registry) {
 		
@@ -51,14 +50,17 @@ public class SearchGUI extends JFrame{
 				if (e.getSource().equals(findButton)) {
 					
 					//Initialize a String variable with suspect's entered name
-					String name = suspectName.getText();
-					//Search in ArrayList<> allSuspects
+					String enteredName = suspectName.getText();
+					
+					//Search in ArrayList<> allSuspects, for the entered name
+					boolean found = false;
 					for (Suspect s : registry.getAllSuspects()) {
-						if (name.equals(s.getName())) { //If found this suspect
+						if (enteredName.equals(s.getName())) { //If found this suspect
 							tempS = s;
 							found = true; 
 						}
 					}
+					
 					if (found==true) {
 						//Create/open a new JPanel "Suspect Page"
 						new SuspectGUI(tempS, registry);
@@ -67,7 +69,7 @@ public class SearchGUI extends JFrame{
 					}
 					else {
 						//Show a NOT found message
-						JOptionPane.showMessageDialog(SearchGUI.this, "Suspect " + name + " NOT found!",
+						JOptionPane.showMessageDialog(SearchGUI.this, "Suspect " + enteredName + " NOT found!",
 								                      "Message", JOptionPane.ERROR_MESSAGE);
 					}
 				}	

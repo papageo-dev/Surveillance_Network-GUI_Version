@@ -67,13 +67,13 @@ public class Suspect {
 		return connected;
 	}
 	
-	//Return a list that contains common potential partners of current suspect and aSuspect
+	//Return a list that contains common potential partners, between current suspect and aSuspect
 	public ArrayList<Suspect> getCommonPartners(Suspect aSuspect) {
 		
 		//Search in current suspect's and aSuspect's list with potential partners for common partners
 		for (Suspect s1 : potentialPartners) {
 			for (Suspect s2 : aSuspect.potentialPartners) {
-				//If found a partner with the same name and code name in both lists, add to local ArrayList 'commonPartners'
+				//If found a partner with the same name and code name in both lists, add to  ArrayList 'commonPartners'
 				if (s1.getName().equals(s2.getName()) && s1.getCodeName().equals(s2.getCodeName())) {
 					commonPartners.add(s2);
 					break;
@@ -125,7 +125,7 @@ public class Suspect {
 				}
 			}
 		}
-		//Return a list with all suggested partners for this Suspect
+		//Return a list with all suggested partners
 		return suggestedPartners;	
 	}
 
@@ -140,12 +140,12 @@ public class Suspect {
 	}
 	
 	//Return number of suspect's potential partners
-	public int getNumberOfPotentialPartners(){
+	public int getNumberOfPotentialPartners() {
 		return potentialPartners.size();
 	}
 	
 	//Return a list with supsect's potential partners
-	public ArrayList<Suspect> getPotentialPartners(){
+	public ArrayList<Suspect> getPotentialPartners() {
 		return potentialPartners;
 	}
 	

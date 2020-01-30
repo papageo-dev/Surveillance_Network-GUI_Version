@@ -41,6 +41,7 @@ public class SuspectGUI extends JFrame {
 	
 	private JLabel partnersLabel;
 	private JLabel suggestedPartnersLabel;
+	
 
 	public SuspectGUI(Suspect tempS, Registry registry) {
 		
@@ -52,24 +53,25 @@ public class SuspectGUI extends JFrame {
 		suggPartnersPanel = new JPanel();
 		sameCountryPanel = new JPanel();
 		
-		//Initialize JTextFields
+		//Initialize JTextField(s)
 		nameTxt = new JTextField(tempS.getName());
 		codeNameTxt = new JTextField(tempS.getCodeName());
 		enterPhoneNumTxt = new JTextField("Enter suspect's phone number");
 		
-		//Initialize JButtons
+		//Initialize JButton(s)
 		findSMSButton = new JButton("Find SMS");
 		backButton = new JButton("Return to Search Screen");
 		
-		//Set tips for JButtons
+		//Set toolTip for JButton(s)
 		findSMSButton.setToolTipText("Search for suspicious SMS");
 		backButton.setToolTipText("Search for another suspect");
 		
-		//Initialize JLabels
+		//Initialize JLabel(s)
 		partnersLabel = new JLabel("Partners");
 		suggestedPartnersLabel = new JLabel("Suggested Partners--->");
 
 
+		//Set phoneList
 		//Initialize JList<> "phoneList" and DefaultListModel "phoneListModel"
 		phoneList = new JList<String>();
 		phoneListModel = new DefaultListModel<String>();
@@ -81,7 +83,7 @@ public class SuspectGUI extends JFrame {
 		//Set DefaultListModel "phoneListModel", to JList "phoneList"
 		phoneList.setModel(phoneListModel);
 		
-		
+		//Set partnersList
 		//Initialize JList<> "partnersList" and DefaultListModel "partnersListModel"
 		partnersList = new JList<String>();
 		partnersListModel = new DefaultListModel<String>();
@@ -93,7 +95,7 @@ public class SuspectGUI extends JFrame {
 		//Set DefaultListModel "partnersListModel", to JList "partnersList"
 		partnersList.setModel(partnersListModel);
 		
-		
+		//Set suggestedPartnersList
 		//Initialize JList<> "suggestedPartnersList" and DefaultListModel "suggestedPartnersListModel"
 		suggestedPartnersList = new JList<String>();
 		suggestedPartnersListModel = new DefaultListModel<String>();
@@ -110,7 +112,7 @@ public class SuspectGUI extends JFrame {
 		//Set DefaultListModel "suggestedPartnersListModel", to JList "suggestedPartnersList"
 		suggestedPartnersList.setModel(suggestedPartnersListModel);
 		
-		
+		//Set suspectsFromSameCountryList
 		//Initialize JList<> "suspectsFromSameCountryList" and DefaultListModel "suspectsFromSameCountryListModel"
 		suspectsFromSameCountryList = new JList<String>();
 		suspectsFromSameCountryListModel = new DefaultListModel<String>();
@@ -125,12 +127,13 @@ public class SuspectGUI extends JFrame {
 		//Set DefaultListModel "suspectsFromSameCountryListModel", to JList "suspectsFromSameCountryList"
 		suspectsFromSameCountryList.setModel(suspectsFromSameCountryListModel);
 		
-		
+		//Set suspectsSuspiciousSMSList
 		//Initialize JList<> "suspectsSuspiciousSMSList" and DefaultListModel "suspectsSuspiciousSMSListModel"
 		suspectsSuspiciousSMSList = new JList<String>();
 		suspectsSuspiciousSMSListModel = new DefaultListModel<String>();
 		
 	
+		//Set Listeners
 		//Create a Listener for the JTextField enterPhoneNumTxt
 		enterPhoneNumTxt.addFocusListener(new FocusListener() {
             //If user click on JTextField enterPhoneNumTxt
@@ -210,7 +213,8 @@ public class SuspectGUI extends JFrame {
 			}
 		});
 		
-				
+		
+		//Initialize JFrame		
 		//Add graphic elements on JPanel "suspectInfopanel"
 		suspectInfopanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 	    suspectInfopanel.add(nameTxt);
@@ -256,7 +260,6 @@ public class SuspectGUI extends JFrame {
 		
 		panel.add(backButton); //Return to "SearchGUI" screen	
 		
-		//Initialize JFrame
 		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		this.setContentPane(panel);
 	    this.setTitle("Suspect Page");

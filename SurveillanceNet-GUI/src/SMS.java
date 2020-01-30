@@ -10,10 +10,6 @@ public class SMS extends Communication {
 		this.contentText = contentText; //Initialize SMS's content text
 	}
 
-	public SMS() {
-		// TODO Auto-generated constructor stub
-	}
-
 	//Print SMS information
 	public void printInfo() {
 		System.out.println("This SMS has the following info \n" + 
@@ -22,10 +18,9 @@ public class SMS extends Communication {
 				"Text: " + contentText);	
 	}
 	
-	//Return SMS's content Text
+	//Return SMS's content text
 	public String getContentText() {
 		return contentText;
 	}
 
-	
 }
