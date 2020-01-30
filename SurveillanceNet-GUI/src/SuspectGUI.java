@@ -163,7 +163,7 @@ public class SuspectGUI extends JFrame {
 					//Check if user's input is valid
 					boolean validInput=false;
 					if (enteredNum.trim().isEmpty() || Character.isLetter(enteredNum.charAt(0)) || enteredNum==null) {
-						JOptionPane.showMessageDialog(SuspectGUI.this, "Please enter a valid phone number and try again",
+						JOptionPane.showMessageDialog(SuspectGUI.this, "Enter a valid phone number and try again!",
 			                      "Invalid Input", JOptionPane.ERROR_MESSAGE);
 						validInput=false;
 					}
@@ -186,7 +186,7 @@ public class SuspectGUI extends JFrame {
 					    }
 					    //Check if there are Suspicious Messages for enteredNum
 						if (suspectsSuspiciousSMSListModel.getSize()==0) {
-							JOptionPane.showMessageDialog(SuspectGUI.this, "There aren't Suspicious Messages for this phone number",
+							JOptionPane.showMessageDialog(SuspectGUI.this, "There are no suspicious messages for this phone number",
 				                      "Message", JOptionPane.INFORMATION_MESSAGE);
 						}
 						else {
@@ -217,10 +217,12 @@ public class SuspectGUI extends JFrame {
 		//Initialize JFrame		
 		//Add graphic elements on JPanel "suspectInfopanel"
 		suspectInfopanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+		nameTxt.setEditable(false);
+		nameTxt.setPreferredSize(new Dimension(130, 20));
 	    suspectInfopanel.add(nameTxt);
-	    nameTxt.setEditable(false);
-	    suspectInfopanel.add(codeNameTxt);
+	    codeNameTxt.setPreferredSize(new Dimension(130, 20));
 	    codeNameTxt.setEditable(false);
+	    suspectInfopanel.add(codeNameTxt);
 	    suspectInfopanel.add(phoneList);
 	    suspectInfopanel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 	    panel.add(suspectInfopanel);
@@ -246,14 +248,14 @@ public class SuspectGUI extends JFrame {
 	    //Add graphic elements on JPanel "suggPartnersPanel"
 	    suggPartnersPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 	    suggPartnersPanel.add(suggestedPartnersLabel);
-	    suggestedPartnersList.setPreferredSize(new Dimension(220, 60));
+	    suggestedPartnersList.setPreferredSize(new Dimension(220, 80));
 	    suggPartnersPanel.add(suggestedPartnersList);
 	    suggPartnersPanel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 	    panel.add(suggPartnersPanel);
 		
 		//Add graphic elements on JPanel "sameCountryPanel"
 	    sameCountryPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-	    suspectsFromSameCountryList.setPreferredSize(new Dimension(330, 60));
+	    suspectsFromSameCountryList.setPreferredSize(new Dimension(330, 80));
 	    sameCountryPanel.add(suspectsFromSameCountryList);
 	    sameCountryPanel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 	    panel.add(sameCountryPanel);
@@ -265,7 +267,7 @@ public class SuspectGUI extends JFrame {
 	    this.setTitle("Suspect Page");
 		this.setVisible(true);
 		this.setResizable(false);
-		this.setSize(530, 650);
+		this.setSize(530, 670);
 		this.setLocationRelativeTo(null);
 	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
