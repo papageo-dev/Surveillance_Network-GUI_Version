@@ -1,6 +1,6 @@
 # Surveillance Network - GUI Version
 
-Another version of [Surveillance_Network](https://github.com/papageo-dev/Surveillance_Network.git) system for **monitoring** the **activity** of a network of **suspected criminals** and the **relationships** that exist between them, in Java.
+Another version of [Surveillance Network](https://github.com/papageo-dev/Surveillance_Network.git) system for **monitoring** the **activity** of a network of **suspected criminals** and the **relationships** that exist between them, in Java.
 
 # General Description
 
